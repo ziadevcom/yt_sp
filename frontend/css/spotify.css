@@ -1,0 +1,22 @@
+/* Spotify Authentication Box */
+
+.spotify-authentication {
+  display: flex;
+  justify-content: space-between;
+  padding: 4rem 2rem;
+  border: var(--border);
+  border-radius: 25px;
+}
+
+.spotify-authentication h2 {
+  font-size: var(--text-xl);
+}
+
+.spotify-authentication button {
+  min-width: 200px;
+  font-size: 18px;
+}
+
+.spotify-authentication button:hover {
+  background-color: var(--button-hover);
+}
