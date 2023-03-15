@@ -1,12 +1,14 @@
+const cors = require("cors");
 const express = require("express");
 const app = express();
 const port = 3000;
 const router = express.Router();
+app.use(cors());
 
 // Load Youtube API key
 require("dotenv").config();
 
-//
+// Get playlist endpoint
 router.get("/:id", async (req, res) => {
   try {
     const json = await fetch(
@@ -55,6 +57,38 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Get user acess token spoitfy
+
+router.get("/spotify/:authorizationCode", async (req, res) => {
+  // authorization code from client
+  let clientId = process.env.CLIENT_ID;
+  let clientSecret = process.env.CLIENT_SECRET;
+  const authrorizationCode = req.params.authorizationCode;
+
+  // Call spotify api to get access token
+  // access token is used when calling spotify api on behalf of a user
+  try {
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization:
+          "Basic " +
+          Buffer.from(clientId + ":" + clientSecret).toString("base64"),
+      },
+
+      body: new URLSearchParams({
+        grant_type: "authorization_code",
+        code: authrorizationCode,
+        redirect_uri: "http://127.0.0.1:5500/frontend/",
+      }), // body data type must match "Content-Type" header
+    });
+    const json = await response.json(); // parses JSON response into native JavaScript objects
+    res.json(json);
+  } catch (e) {
+    res.json({ error: e.message });
+  }
+});
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
