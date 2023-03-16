@@ -33,14 +33,23 @@
   --font-text: "Golos Text", sans-serif;
   --font-heading: "Tilt Warp", cursive;
   /* Font Sizes */
-  --text-xl: clamp(20px, 4vw + 1rem, 50px);
+  --text-xl: clamp(30px, 3vw + 1rem, 50px);
   --text-lg: 40px;
   --text-normal: 16px;
   --text-small: 14px;
   /* Border */
   --border: 2px solid #1f4a45;
+  --radius: 25px;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.4;
+}
 body {
   height: 100vh;
   display: flex;
@@ -50,6 +59,7 @@ body {
   font-family: 400;
   color: var(--text-color);
   background-image: var(--primary-bg);
+  padding: 20px;
 }
 
 .container {
@@ -57,6 +67,8 @@ body {
 }
 
 button {
+  --font-size: var(--text-normal);
+  font-size: var(--font-size);
   border: 0px;
   padding: 1rem;
   font-family: inherit;
@@ -70,4 +82,11 @@ button {
 button:hover {
   background: var(--text-color);
   color: var(--text-color);
+}
+
+@media screen and (max-width: 500px) {
+  button {
+    width: 100%;
+    padding: 0.75rem;
+  }
 }

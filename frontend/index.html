@@ -5,15 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TYSP - Copy Youtube Playlists to Spotify without a Hassle</title>
-    <script defer src="./script.js"></script>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
     <div class="container">
-      <div class="spotify-authentication">
+      <div id="spotify-authentication">
         <h2>Authenticate your Spotify account</h2>
-        <button>Connect</button>
+        <button id="connectSpotify">Connect</button>
       </div>
+      <div id="spotify-profile">
+        <img
+          src="https://images.generated.photos/BtMkiyXfrWRmTYKz24OyRtSDdUVtVnp0ih0c0gJB8hw/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NDYxNDE3LmpwZw.jpg"
+          alt="your spotify profile picture"
+        />
+        <h2>Welcome Spotify User</h2>
+      </div>
+      <!-- <div id="yt-playlist-search">
+        <form action="http://localhost:3000/" method="get">
+          <label for="playlistInput">Enter your playlist URL.</label>
+          <input type="text" id="playlistInput" />
+          <input type="submit" value="Get All Songs" />
+        </form>
+      </div> -->
     </div>
   </body>
+  <script type="module" src="./scripts/spotify.js"></script>
+  <script type="module" src="./scripts/script.js"></script>
 </html>

@@ -1,22 +1,49 @@
 /* Spotify Authentication Box */
-
-.spotify-authentication {
+#spotify-authentication,
+#spotify-profile {
   display: flex;
   justify-content: space-between;
   padding: 4rem 2rem;
   border: var(--border);
-  border-radius: 25px;
+  border-radius: var(--radius);
+  flex-wrap: wrap;
+  gap: 1.25rem;
 }
 
-.spotify-authentication h2 {
+#spotify-authentication h2,
+#spotify-profile h2 {
   font-size: var(--text-xl);
 }
 
-.spotify-authentication button {
+#spotify-authentication button {
   min-width: 200px;
-  font-size: 18px;
+  --font-size: 18px;
 }
 
-.spotify-authentication button:hover {
+#spotify-authentication button:hover {
   background-color: var(--button-hover);
+}
+
+/* Spotify Profile*/
+#spotify-profile {
+  display: none;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+#spotify-profile img {
+  width: min(100%, 300px);
+  border-radius: var(--radius);
+}
+
+@media screen and (max-width: 900px) {
+  #spotify-authentication,
+  #spotify-profile {
+    padding: 1.25rem;
+  }
+
+  #spotify-authentication button {
+    --font-size: 16px;
+  }
 }
