@@ -1,3 +1,5 @@
+const SERVER_URL = "http://localhost:3000/";
+const SPOTIFY_BASE_URL = "https://api.spotify.com/v1";
 const connectSpotify = document.getElementById("connectSpotify");
 const spotifyProfile = document.getElementById("spotify-profile");
 
