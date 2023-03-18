@@ -7,7 +7,7 @@ const spotifyProfile = document.querySelector('.spotify-profile--content')
 connectSpotify.onclick = () => {
   const scope = 'playlist-modify-public'
   const clientId = 'd4530bfc63064a4493176570357abb89'
-  const redirectURI = 'http://localhost:5500/'
+  const redirectURI = location.href
   location.href = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scope}&redirect_uri=${redirectURI}`
 }
 
