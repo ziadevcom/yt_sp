@@ -52,7 +52,6 @@ export function saveAccessToken(accessToken) {
 export function getLocalAccessToken() {
   return JSON.parse(localStorage.getItem("accessToken")) || null;
 }
-
 export function displaySpotifyUserUI(userInfo) {
   // Add user's name and image in the UI
   spotifyProfile.querySelector(
