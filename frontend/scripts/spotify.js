@@ -19,6 +19,13 @@ export async function getAccessToken() {
   const authrorizationCode = spotifyParams.get("code");
   if (!authrorizationCode) return;
 
+  // Removing auth code from url without reloading the page
+  // Fixes a bug which is a very weird edge case.
+  // If user connets with spotify and clear local storage without
+  // removing auth code from url, app gets stuck in a weird
+  // loop and user is unable to authenticate or use it.
+  history.pushState(null, "", "/frontend/");
+  console.log(`${SERVER_URL}spotify/${authrorizationCode}`);
   const accessTokenJSON = await fetch(
     `${SERVER_URL}spotify/${authrorizationCode}`
   );
@@ -39,6 +46,7 @@ export async function refreshAccessToken() {
     `${SERVER_URL}spotify/refresh/${refreshToken}`
   );
   const accessTokenObj = await accessTokenJSON.json();
+  console.log(accessTokenObj);
   accessTokenObj.refresh_token = refreshToken;
   saveAccessToken(accessTokenObj);
   return accessTokenObj;
@@ -63,7 +71,9 @@ export function displaySpotifyUserUI(userInfo) {
   // Hide the spotify authentication section
   connectSpotify.parentElement.style.display = "none";
   // Hide Preloader
-  document.querySelector("#preloader").classList.add("hidden");
+  spotifyProfile.querySelector("img").onload = () => {
+    document.querySelector("#preloader").classList.add("hidden");
+  };
   // document.querySelector("#preloader").style.display = "none";
 }
 
@@ -88,7 +98,7 @@ export function isExpiredAccessToken(accessToken) {
   const creationTime = accessToken.timestamp / 1000;
   const now = Date.now() / 1000;
 
-  if (now - creationTime >= 3000) {
+  if (now - creationTime >= 3600) {
     return true;
   }
 

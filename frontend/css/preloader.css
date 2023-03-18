@@ -1,0 +1,29 @@
+#preloader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  border: var(--border);
+  border-radius: var(--radius);
+  background-image: var(--primary-bg);
+  border-color: var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  opacity: 1;
+  transition: visibility 500ms ease-out, opacity 500ms ease-out;
+}
+
+#preloader h2 {
+  font-size: var(--text-xl);
+  color: var(--text-color);
+  text-align: center;
+}
+
+#preloader svg {
+  width: 60px;
+  fill: var(--text-color);
+}

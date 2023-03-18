@@ -14,11 +14,111 @@
         <button id="connectSpotify">Connect</button>
       </div>
       <div id="spotify-profile">
-        <img
-          src="https://images.generated.photos/BtMkiyXfrWRmTYKz24OyRtSDdUVtVnp0ih0c0gJB8hw/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NDYxNDE3LmpwZw.jpg"
-          alt="your spotify profile picture"
-        />
-        <h2>Welcome Spotify User</h2>
+        <div class="spotify-profile--content">
+          <img src="./img/bars.svg" alt="your spotify profile picture" />
+          <h2>Hey <span></span> 👋</h2>
+        </div>
+        <div id="preloader">
+          <svg
+            width="135"
+            height="140"
+            viewBox="0 0 135 140"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#fff"
+          >
+            <rect y="10" width="15" height="120" rx="6">
+              <animate
+                attributeName="height"
+                begin="0.5s"
+                dur="1s"
+                values="120;110;100;90;80;70;60;50;40;140;120"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="y"
+                begin="0.5s"
+                dur="1s"
+                values="10;15;20;25;30;35;40;45;50;0;10"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+            </rect>
+            <rect x="30" y="10" width="15" height="120" rx="6">
+              <animate
+                attributeName="height"
+                begin="0.25s"
+                dur="1s"
+                values="120;110;100;90;80;70;60;50;40;140;120"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="y"
+                begin="0.25s"
+                dur="1s"
+                values="10;15;20;25;30;35;40;45;50;0;10"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+            </rect>
+            <rect x="60" width="15" height="140" rx="6">
+              <animate
+                attributeName="height"
+                begin="0s"
+                dur="1s"
+                values="120;110;100;90;80;70;60;50;40;140;120"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="y"
+                begin="0s"
+                dur="1s"
+                values="10;15;20;25;30;35;40;45;50;0;10"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+            </rect>
+            <rect x="90" y="10" width="15" height="120" rx="6">
+              <animate
+                attributeName="height"
+                begin="0.25s"
+                dur="1s"
+                values="120;110;100;90;80;70;60;50;40;140;120"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="y"
+                begin="0.25s"
+                dur="1s"
+                values="10;15;20;25;30;35;40;45;50;0;10"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+            </rect>
+            <rect x="120" y="10" width="15" height="120" rx="6">
+              <animate
+                attributeName="height"
+                begin="0.5s"
+                dur="1s"
+                values="120;110;100;90;80;70;60;50;40;140;120"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="y"
+                begin="0.5s"
+                dur="1s"
+                values="10;15;20;25;30;35;40;45;50;0;10"
+                calcMode="linear"
+                repeatCount="indefinite"
+              />
+            </rect>
+          </svg>
+          <h2>Fetching your Spotify Profile</h2>
+        </div>
       </div>
       <!-- <div id="yt-playlist-search">
         <form action="http://localhost:3000/" method="get">
@@ -29,6 +129,10 @@
       </div> -->
     </div>
   </body>
-  <script type="module" src="./scripts/spotify.js"></script>
-  <script type="module" src="./scripts/script.js"></script>
+  <script
+    defer
+    src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+  ></script>
+  <script defer type="module" src="./scripts/spotify.js"></script>
+  <script defer type="module" src="./scripts/script.js"></script>
 </html>
