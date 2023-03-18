@@ -1,8 +1,6 @@
-// const request = require("request");
 const cors = require("cors");
 const express = require("express");
 const app = express();
-const port = 3000;
 const router = express.Router();
 app.use(cors());
 
@@ -13,7 +11,7 @@ require("dotenv").config();
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const redirectURI = process.env.REDIRECT_URI;
-
+console.log(redirectURI)
 // Get playlist endpoint
 router.get("/youtube/:id", async (req, res) => {
   try {
@@ -67,7 +65,6 @@ router.get("/youtube/:id", async (req, res) => {
 router.get("/spotify/:authorizationCode", async (req, res) => {
   // authorization code from client
   const authrorizationCode = req.params.authorizationCode;
-
   // Call spotify api to get access token
   // access token is used when calling spotify api on behalf of a user
   try {
