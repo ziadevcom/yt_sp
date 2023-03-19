@@ -28,10 +28,20 @@
 
 #yt-playlist-search input[type="submit"] {
   height: var(--height);
+  padding: 0px;
 }
 
 @media screen and (max-width: 500px) {
   #yt-playlist-search input[type="submit"] {
     flex-grow: 1;
+  }
+
+  #playlist-id-input {
+    --height: 45px;
+  }
+
+  #yt-playlist-search input[type="submit"] {
+    --height: 45px;
+    font-size: 16px;
   }
 }

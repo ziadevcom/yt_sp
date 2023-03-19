@@ -52,7 +52,7 @@ h6 {
   line-height: 1.4;
 }
 body {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,11 +102,11 @@ input[type="submit"]:hover {
 }
 
 .box {
-  padding: 3rem 2rem;
+  padding: 2rem;
   border: var(--border);
   border-radius: var(--radius);
   flex-wrap: wrap;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 @media screen and (max-width: 900px) {
