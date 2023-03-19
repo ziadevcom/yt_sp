@@ -17,10 +17,13 @@
 #yt-playlist-search .form-wrap label {
   margin-bottom: 0.75rem;
 }
+
 #playlist-id-input {
   height: var(--height);
   border-radius: 5px;
   border: 0px;
+  padding: 0 1rem;
+  font-family: var(--font-text);
 }
 
 #yt-playlist-search input[type="submit"] {
