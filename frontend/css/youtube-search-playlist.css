@@ -1,0 +1,34 @@
+#yt-playlist-search form {
+  --height: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+#yt-playlist-search .form-wrap {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+}
+
+#yt-playlist-search .form-wrap label {
+  margin-bottom: 0.75rem;
+}
+#playlist-id-input {
+  height: var(--height);
+  border-radius: 5px;
+  border: 0px;
+}
+
+#yt-playlist-search input[type="submit"] {
+  height: var(--height);
+}
+
+@media screen and (max-width: 500px) {
+  #yt-playlist-search input[type="submit"] {
+    flex-grow: 1;
+  }
+}
