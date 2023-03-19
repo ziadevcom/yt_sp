@@ -67,8 +67,9 @@ body {
   width: 1300px;
 }
 
-button {
-  --font-size: var(--text-normal);
+button,
+input[type="submit"] {
+  --font-size: 18px;
   font-size: var(--font-size);
   border: 0px;
   padding: 1rem;
@@ -78,11 +79,13 @@ button {
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  width: 200px;
 }
 
-button:hover {
-  background: var(--text-color);
+button:hover,
+input[type="submit"]:hover {
   color: var(--text-color);
+  background-color: var(--button-hover);
 }
 
 @media screen and (max-width: 500px) {
@@ -96,4 +99,18 @@ button:hover {
   opacity: 0 !important;
   pointer-events: none;
   visibility: hidden;
+}
+
+.box {
+  padding: 3rem 2rem;
+  border: var(--border);
+  border-radius: var(--radius);
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 900px) {
+  .box {
+    padding: 1.5rem;
+  }
 }

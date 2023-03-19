@@ -3,11 +3,8 @@
 #spotify-profile .spotify-profile--content {
   display: none;
   justify-content: space-between;
-  padding: 4rem 2rem;
-  border: var(--border);
-  border-radius: var(--radius);
-  flex-wrap: wrap;
   gap: 1.25rem;
+  flex-wrap: wrap;
 }
 
 #spotify-authentication h2,
@@ -15,21 +12,20 @@
   font-size: var(--text-xl);
 }
 
-#spotify-authentication button {
+/* #spotify-authentication button {
   width: 200px;
   --font-size: 18px;
 }
 
 #spotify-authentication button:hover {
   background-color: var(--button-hover);
-}
+} */
 
 /* Spotify Profile*/
 #spotify-profile .spotify-profile--content {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 1rem;
   position: relative;
 }
 
@@ -46,10 +42,10 @@
 }
 
 @media screen and (max-width: 900px) {
-  #spotify-authentication,
+  /* #spotify-authentication,
   #spotify-profile .spotify-profile--content {
     padding: 1.25rem;
-  }
+  } */
 
   #spotify-authentication button {
     --font-size: 16px;
