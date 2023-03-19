@@ -22,6 +22,7 @@ router.get('/youtube/:id', async (req, res) => {
   // in the playlist
 
   let totalItems; let nextPageToken = ''
+
   try {
     let response = null; let results = []
     do {
@@ -36,11 +37,12 @@ router.get('/youtube/:id', async (req, res) => {
       // console.log(results)
     } while (results.length < totalItems)
 
-    // // Error handling, in case api error, throw an error
-    // if (response.error) {
-    //   console.log(response.error)
-    //   throw new Error('API Failure.')
-    // }
+    // Error handling, in case api error, throw an error
+    if (response.error) {
+      console.log(response.error)
+      throw new Error('API Failure.')
+    }
+
     // Format the response before returning
     const items = results.map((obj) => {
       // Checking if video is private then return null so we can filter and remove these later.
