@@ -37,7 +37,10 @@ function isValidPlaylistURL (url) {
 }
 
 function getPlaylistID (url) {
-  return 'https://www.youtube.com/playlist?list=PL-X-RdKBc6bZ3XyVO-y2iLhriyAScc4Ez'.split('playlist?list=')[1]
+  // return url.split('playlist?list=')[1]
+  const queryParamString = url.split('?')[1]
+  const queryParams = new URLSearchParams(queryParamString)
+  return queryParams.get('list')
 }
 
 async function fetchSongsFromAPI (playlistID) {
