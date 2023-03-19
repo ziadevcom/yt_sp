@@ -1,4 +1,4 @@
-const SERVER_URL = import.meta.env.MODE === 'development' ? 'http://localhost:3000/' : 'https://ytsp.cyclic.app/'
+const SERVER_URL = import.meta.env.VITE_SERVER_URL
 const SPOTIFY_BASE_URL = 'https://api.spotify.com/v1'
 const connectSpotify = document.getElementById('connectSpotify')
 const spotifyProfile = document.querySelector('.spotify-profile--content')
@@ -7,7 +7,7 @@ const spotifyProfile = document.querySelector('.spotify-profile--content')
 connectSpotify.onclick = () => {
   const scope = 'playlist-modify-public'
   const clientId = 'd4530bfc63064a4493176570357abb89'
-  const redirectURI = location.protocol + '//' + location.host
+  const redirectURI = location.protocol + '//' + location.host + '/'
   location.href = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scope}&redirect_uri=${redirectURI}`
 }
 
