@@ -11,7 +11,7 @@ require("dotenv").config();
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const redirectURI = process.env.REDIRECT_URI;
-console.log(redirectURI)
+console.log(redirectURI);
 // Get playlist endpoint
 router.get("/youtube/:id", async (req, res) => {
   try {
@@ -65,6 +65,12 @@ router.get("/youtube/:id", async (req, res) => {
 router.get("/spotify/:authorizationCode", async (req, res) => {
   // authorization code from client
   const authrorizationCode = req.params.authorizationCode;
+  const formBody = new URLSearchParams({
+    grant_type: "authorization_code",
+    code: authrorizationCode,
+    redirect_uri: redirectURI,
+  });
+  console.log(formBody);
   // Call spotify api to get access token
   // access token is used when calling spotify api on behalf of a user
   try {
@@ -77,11 +83,7 @@ router.get("/spotify/:authorizationCode", async (req, res) => {
           Buffer.from(clientId + ":" + clientSecret).toString("base64"), // converting client id and clientsecret to base64 becasue spotify demands that format
       },
 
-      body: new URLSearchParams({
-        grant_type: "authorization_code",
-        code: authrorizationCode,
-        redirect_uri: redirectURI,
-      }), // body data type must match "Content-Type" header
+      body: formBody, // body data type must match "Content-Type" header
     });
 
     // Parses JSON response into native JavaScript objects
