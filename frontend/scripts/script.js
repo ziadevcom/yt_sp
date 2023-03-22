@@ -7,6 +7,32 @@ import {
   isExpiredAccessToken
 } from './spotify.js'
 
+window.onload = setupUI
+
+function setupUI () {
+  const token = getLocalAccessToken()
+
+  // Spotify callback redirect
+  // User redirected back to website after connecting their account
+  // We check that by looking for "code" query parameter in URL
+  if (location.href.includes('?code=')) {
+    updateUserProfile()
+    return
+  }
+
+  // User already logged in, so we just update profile
+  if (token) {
+    updateUserProfile()
+    return
+  }
+
+  // First time website visit, so we show authentication box
+  if (!token) {
+    document.querySelector('#spotify-profile').style.display = 'none'
+    document.querySelector('#spotify-authentication').style.display = 'flex'
+  }
+}
+
 // Add user profile in page when website loads
 // If accessToken already in localStorage, user that.
 // Otherwise request a new one from the server
@@ -26,38 +52,5 @@ async function updateUserProfile () {
   const userInfo = await getSpotifyUserInfo(accessToken)
 
   // Added some delay before making user profile visible to give a "Loading effect"
-  setTimeout(() => displaySpotifyUserUI(userInfo), 1000)
-}
-
-window.onload = function setupUI () {
-  // return
-  const token = getLocalAccessToken()
-
-  if (token) {
-    // Conditional for consecutive user website visits
-    // Consecutive website visits conditional comes before
-    // authorization code check after connecting spotify
-    // because if user connects spotify account &
-    // reloads the page while there is still "code"
-    // query is present in the url
-    // We don't want to fire the functionality for getting access token again
-    // becasue we will be using old / used authorization code to
-    // get a new access token and that will end in a error 401 from spotify
-    // saying that auth code has expired.
-    // Wrote it down because i had a lot of trouble figuring out this bug.
-    updateUserProfile()
-    return
-  }
-  if (location.href.includes('?code=')) {
-    // When user has connected spotify account
-    // We check for authorizatoin code in the URL
-    updateUserProfile()
-    return
-  }
-
-  if (!token) {
-    // First time website visit, we just show authentication box
-    document.querySelector('#spotify-profile').style.display = 'none'
-    document.querySelector('#spotify-authentication').style.display = 'flex'
-  }
+  setTimeout(() => displaySpotifyUserUI(userInfo), 500)
 }
