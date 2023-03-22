@@ -8,6 +8,7 @@
   flex-wrap: wrap;
 }
 
+/* Input Wrapper Style */
 #yt-playlist-search .form-wrap {
   display: flex;
   flex-direction: column;
@@ -26,9 +27,18 @@
   font-family: var(--font-text);
 }
 
+/* Button Styles */
 #yt-playlist-search input[type="submit"] {
   height: var(--height);
   padding: 0px;
+}
+
+#try-demo {
+  border-radius: 999px;
+  font-size: 14px;
+  padding: 0.4rem 1rem;
+  width: auto;
+  margin-left: 1rem;
 }
 
 @media screen and (max-width: 500px) {
@@ -43,5 +53,17 @@
   #yt-playlist-search input[type="submit"] {
     --height: 45px;
     font-size: 16px;
+  }
+
+  #yt-playlist-search .form-wrap label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #try-demo {
+    margin: 0 0 0.7rem 0;
+    order: -1;
+    width: max-content !important;
+    font-size: 12px;
   }
 }

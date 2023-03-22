@@ -1,16 +1,20 @@
+const tryDemoPlaylistButton = document.querySelector('#try-demo')
 const youtubePlaylistForm = document.querySelector('#yt-playlist-search form')
+const playlistURLInput = youtubePlaylistForm.querySelector('input[type="text"]')
+const getAllSongsButton = youtubePlaylistForm.querySelector('input[type="submit"]')
 
-youtubePlaylistForm.onsubmit = async function getAllSongs (event) {
+youtubePlaylistForm.onsubmit = getAllSongs
+tryDemoPlaylistButton.onclick = submitDemoForm
+
+async function getAllSongs (event) {
   event.preventDefault()
 
-  // Disable form submit button
-  const getAllSongsButton = youtubePlaylistForm.querySelector('input[type="submit"]')
-  console.log(getAllSongsButton)
+  // Disable form submit buttons so user can't send consecutive requests before server responded to previous request
   getAllSongsButton.setAttribute('disabled', true)
-
+  tryDemoPlaylistButton.setAttribute('disabled', true)
+  const playlistURL = playlistURLInput.value
   // Verify if URL is of a valid playlist
   const serverURL = event.srcElement.action
-  const playlistURL = event.target.querySelector('input[type="text"]').value
 
   if (!isValidPlaylistURL(playlistURL)) {
     console.log('is not a valid url')
@@ -28,6 +32,7 @@ youtubePlaylistForm.onsubmit = async function getAllSongs (event) {
 
   // Enable button again
   getAllSongsButton.removeAttribute('disabled')
+  tryDemoPlaylistButton.removeAttribute('disabled')
 }
 
 function isValidPlaylistURL (url) {
@@ -37,7 +42,6 @@ function isValidPlaylistURL (url) {
 }
 
 function getPlaylistID (url) {
-  // return url.split('playlist?list=')[1]
   const queryParamString = url.split('?')[1]
   const queryParams = new URLSearchParams(queryParamString)
   return queryParams.get('list')
@@ -65,7 +69,6 @@ function addSongsUI (songs) {
 }
 
 function createSongElement (songInfo) {
-  console.log(songInfo)
   const div = document.createElement('div')
   div.classList = 'youtube-song'
 
@@ -81,4 +84,12 @@ function createSongElement (songInfo) {
   div.append(title)
 
   return div
+}
+
+// Try Demo Playlist functionality
+function submitDemoForm () {
+  const demoPlaylistURL = 'https://www.youtube.com/playlist?list=PLSdoVPM5WnndLX6Ngmb8wktMF61dJirKl'
+
+  youtubePlaylistForm.querySelector('input[type="text"]').value = demoPlaylistURL
+  youtubePlaylistForm.requestSubmit(getAllSongsButton)
 }
