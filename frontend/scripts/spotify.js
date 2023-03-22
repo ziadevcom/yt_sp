@@ -19,18 +19,12 @@ export async function getAccessToken () {
   const authrorizationCode = spotifyParams.get('code')
   if (!authrorizationCode) return
 
-  // Removing auth code from url without reloading the page
-  // Fixes a bug which is a very weird edge case.
-  // If user connets with spotify and clear local storage without
-  // removing auth code from url, app gets stuck in a weird
-  // loop and user is unable to authenticate or use it.
-  // history.pushState(null, '', '/')
-  console.log(`${SERVER_URL}spotify/${authrorizationCode}`)
+  // Removing auth code from url without reloading the page to just make the url cleaner & avoid any potential edge cases
+  history.pushState(null, '', '/')
   const accessTokenJSON = await fetch(
     `${SERVER_URL}spotify/${authrorizationCode}`
   )
   const accessTokenObj = await accessTokenJSON.json()
-  console.log(accessTokenObj)
   saveAccessToken(accessTokenObj) // Save access token in localStorage
   return accessTokenObj
 }
@@ -73,6 +67,8 @@ export function displaySpotifyUserUI (userInfo) {
   // Hide Preloader
   spotifyProfile.querySelector('img').onload = () => {
     document.querySelector('#preloader').classList.add('hidden')
+    // Display youtube playlist search form
+    document.querySelector('#yt-playlist-search').classList.remove('hidden')
   }
   // document.querySelector("#preloader").style.display = "none";
 }
