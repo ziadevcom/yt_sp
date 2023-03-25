@@ -67,6 +67,8 @@ function addSongsUI (songs) {
   songs.forEach(songInfo => {
     songsUIWrapper.appendChild(createSongElement(songInfo))
   })
+
+  addSpotifyPlaylistButton()
 }
 
 function createSongElement (songInfo) {
@@ -75,19 +77,19 @@ function createSongElement (songInfo) {
   div.classList = 'yt-playlist-songs--item   row'
   const action = `
   <div class="yt-playlist-song--action">
-            <input checked="true" type="checkbox" name="${songInfo.title}" />
-            <label class="visually-hidden" for="${songInfo.title}">Select Song</label>
+    <input checked="true" type="checkbox" name="${songInfo.title}" />
+    <label class="visually-hidden" for="${songInfo.title}">Select Song</label>
   </div>`
 
   const status = `
   <div class="yt-playlist-song--status">
-  ${statusImg}
+    ${statusImg}
   </div>`
 
   const title = `
   <div class="yt-playlist-song--song">
-          ${songInfo.title}
-    </div>`
+    ${songInfo.title}
+  </div>`
 
   div.innerHTML = `
   ${action}
@@ -104,4 +106,9 @@ function submitDemoForm () {
 
   youtubePlaylistForm.querySelector('input[type="text"]').value = demoPlaylistURL
   youtubePlaylistForm.requestSubmit(getAllSongsButton)
+}
+
+function addSpotifyPlaylistButton () {
+  const openPopup = document.querySelector('#open-popup')
+  openPopup.classList.toggle('hidden')
 }

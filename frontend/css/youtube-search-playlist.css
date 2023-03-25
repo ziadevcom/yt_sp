@@ -9,13 +9,13 @@
 }
 
 /* Input Wrapper Style */
-#yt-playlist-search .form-wrap {
+form .form-wrap {
   display: flex;
   flex-direction: column;
   flex-grow: 2;
 }
 
-#yt-playlist-search .form-wrap label {
+form .form-wrap label {
   margin-bottom: 0.75rem;
 }
 

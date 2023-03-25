@@ -1,0 +1,125 @@
+#popup {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 9;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --radius: 8px;
+}
+
+#popup-content {
+  --padding: 1rem;
+  width: 600px;
+  color: rgb(29, 29, 29);
+  background-color: var(--bright);
+  border-radius: var(--radius);
+  font-family: var(--font-heading);
+}
+
+#popup-content--header {
+  padding: calc(var(--padding) * 2) var(--padding);
+  background-color: var(--primary-color);
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#popup-content--header h3 {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+#popup-content--header #close-popup {
+  width: 40px !important;
+  display: grid;
+  place-content: center;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius);
+  border-bottom: 4px solid gray;
+  background-color: var(--bright);
+}
+
+#popup-content--header #close-popup:focus-within {
+  border: none;
+}
+
+#popup-content--header #close-popup:hover {
+  opacity: 0.85;
+}
+
+#popup-content--header #close-popup svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Popup form styles */
+#popup-content form {
+  padding: var(--padding);
+}
+
+#popup-content .form-wrap {
+  margin-bottom: 1.5rem;
+}
+
+#popup-content .form-wrap:last-child {
+  margin-bottom: 0rem;
+}
+
+#popup-content input,
+#popup-content select {
+  font-family: var(--font-text);
+  font-size: var(--text-normal);
+  border-radius: var(--radius);
+  padding: 1rem;
+  border: none;
+  background-color: rgb(230, 230, 230);
+}
+
+#popup-content .form-wrap label {
+  font-weight: 300;
+}
+
+input#add-playlist-button {
+  align-self: flex-end;
+  background-color: var(--secondary-color);
+}
+
+input#add-playlist-button:hover {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+@media screen and (max-width: 768px) {
+  #popup-content {
+    width: 90%;
+  }
+}
+
+/* Add to spotify button */
+
+#open-popup {
+  position: fixed;
+  bottom: 1rem;
+  right: 2rem;
+  width: auto !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#open-popup:hover svg path {
+  fill: var(--bright);
+}
+#open-popup svg {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.6rem;
+}
