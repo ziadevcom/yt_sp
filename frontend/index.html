@@ -179,16 +179,26 @@
             />
           </div>
           <div class="form-wrap">
-            <label for="playlist-visibility">Playlist visibility 👀</label>
-            <select
-              required
-              name="playlist-visibility"
-              id="playlist-visibility"
-            >
-              <option value="">Public or Private?</option>
-              <option value="Public">Public</option>
-              <option value="Private">Private</option>
-            </select>
+            <p>Playlist visibility 👀</p>
+            <div>
+              <input
+                type="radio"
+                name="playlist-visibility"
+                id="playlist-visibility--public"
+                value="Public"
+                required
+              />
+              <label for="playlist-visibility--public">Public</label>
+
+              <input
+                type="radio"
+                name="playlist-visibility"
+                id="playlist-visibility--private"
+                value="Private"
+                required
+              />
+              <label for="playlist-visibility--private">Private</label>
+            </div>
           </div>
           <div class="form-wrap">
             <input

@@ -3,7 +3,7 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.75);
   z-index: 9;
-  position: absolute;
+  position: fixed;
   top: 0px;
   left: 0px;
   display: flex;
@@ -21,6 +21,7 @@
   font-family: var(--font-heading);
 }
 
+/* Popup header styles */
 #popup-content--header {
   padding: calc(var(--padding) * 2) var(--padding);
   background-color: var(--primary-color);
@@ -34,6 +35,8 @@
   color: var(--text-color);
   font-weight: 500;
 }
+
+/* Popup close button styles */
 
 #popup-content--header #close-popup {
   width: 40px !important;
@@ -72,8 +75,13 @@
   margin-bottom: 0rem;
 }
 
-#popup-content input,
-#popup-content select {
+/* Input label styles */
+#popup-content .form-wrap label,
+#popup-content .form-wrap p {
+  margin-bottom: 1rem;
+}
+
+#popup-content input {
   font-family: var(--font-text);
   font-size: var(--text-normal);
   border-radius: var(--radius);
@@ -82,10 +90,16 @@
   background-color: rgb(230, 230, 230);
 }
 
-#popup-content .form-wrap label {
-  font-weight: 300;
+/* Playlist visibility radio input styles */
+#popup-content form [for="playlist-visibility--public"],
+#popup-content form [for="playlist-visibility--private"] {
+  font-family: var(--font-text);
+}
+#popup-content form [for="playlist-visibility--public"] {
+  margin-right: 1rem;
 }
 
+/* Form button styles */
 input#add-playlist-button {
   align-self: flex-end;
   background-color: var(--secondary-color);
