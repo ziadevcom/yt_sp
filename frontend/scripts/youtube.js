@@ -63,26 +63,38 @@ async function fetchSongsFromAPI (playlistID) {
 
 function addSongsUI (songs) {
   const songsUIWrapper = document.getElementById('yt-playlist-songs')
+  songsUIWrapper.classList.remove('hidden')
   songs.forEach(songInfo => {
     songsUIWrapper.appendChild(createSongElement(songInfo))
   })
 }
 
 function createSongElement (songInfo) {
+  const statusImg = '💫'
   const div = document.createElement('div')
-  div.classList = 'youtube-song'
+  div.classList = 'yt-playlist-songs--item   row'
+  const action = `
+  <div class="yt-playlist-song--action">
+            <input checked="true" type="checkbox" name="${songInfo.title}" />
+            <label class="visually-hidden" for="${songInfo.title}">Select Song</label>
+  </div>`
 
-  const img = document.createElement('img')
-  img.classList = 'youtube-song--img'
-  img.src = songInfo.thumbnail.url
-  img.loading = 'lazy'
-  div.append(img)
+  const status = `
+  <div class="yt-playlist-song--status">
+  ${statusImg}
+  </div>`
 
-  const title = document.createElement('h3')
-  title.classList = 'youtube-song--title'
-  title.textContent = songInfo.title
-  div.append(title)
+  const title = `
+  <div class="yt-playlist-song--song">
+          ${songInfo.title}
+    </div>`
 
+  div.innerHTML = `
+  ${action}
+  ${title}
+  ${status}
+  `
+  // console.log(div)
   return div
 }
 

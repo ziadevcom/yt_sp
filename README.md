@@ -15,5 +15,3 @@ A web app that will copy your youtube songs playlist into your spotify account.
 **Spotify Authentication:** https://developer.spotify.com/documentation/general/guides/authorization/code-flow/
 
 **Youtube API:** https://developers.google.com/youtube/v3/getting-started
-
-**Open AI API:** https://platform.openai.com/overview

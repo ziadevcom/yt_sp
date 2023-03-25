@@ -60,7 +60,7 @@ body {
   font-family: 400;
   color: var(--text-color);
   background-image: var(--primary-bg);
-  padding: 20px;
+  padding: 1.25rem;
 }
 
 .container {
@@ -113,4 +113,19 @@ input[type="submit"]:hover {
   .box {
     padding: 1.5rem;
   }
+}
+
+/* Class to hide elements but keep them for screen readers
+ */
+.visually-hidden {
+  position: absolute;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }

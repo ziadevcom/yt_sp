@@ -137,7 +137,13 @@
           <input type="submit" value="Get All Songs" />
         </form>
       </div>
-      <div id="yt-playlist-songs"></div>
+      <div id="yt-playlist-songs" class="hidden">
+        <div id="head" class="row">
+          <div class="yt-playlist-song--status">Select Songs</div>
+          <div class="yt-playlist-song--name">Song Name</div>
+          <div class="yt-playlist-song--thumbnail">Status</div>
+        </div>
+      </div>
     </div>
   </body>
   <script defer type="module" src="./scripts/youtube.js"></script>
