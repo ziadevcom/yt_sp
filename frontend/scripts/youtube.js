@@ -67,8 +67,8 @@ function addSongsUI (songs) {
   songs.forEach(songInfo => {
     songsUIWrapper.appendChild(createSongElement(songInfo))
   })
-
-  addSpotifyPlaylistButton()
+  updateUIElements()
+  songsUIWrapper.scrollIntoView()
 }
 
 function createSongElement (songInfo) {
@@ -108,7 +108,7 @@ function submitDemoForm () {
   youtubePlaylistForm.requestSubmit(getAllSongsButton)
 }
 
-function addSpotifyPlaylistButton () {
+function updateUIElements () {
   const openPopup = document.querySelector('#open-popup')
   openPopup.classList.toggle('hidden')
 }

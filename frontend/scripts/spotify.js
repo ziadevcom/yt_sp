@@ -65,12 +65,7 @@ export function displaySpotifyUserUI (userInfo) {
   // Hide the spotify authentication section
   connectSpotify.parentElement.style.display = 'none'
   // Hide Preloader
-  spotifyProfile.querySelector('img').onload = () => {
-    document.querySelector('#preloader').classList.add('hidden')
-    // Display youtube playlist search form
-    document.querySelector('#yt-playlist-search').classList.remove('hidden')
-  }
-  // document.querySelector("#preloader").style.display = "none";
+  spotifyProfile.querySelector('img').onload = updateUIElements
 }
 
 // Get user information from spotify api and display user profile in UI
@@ -99,4 +94,13 @@ export function isExpiredAccessToken (accessToken) {
   }
 
   return false
+}
+
+// Function that updates ui elements after spotify profile is authorized
+
+function updateUIElements () {
+  // Hide Preloader
+  document.querySelector('#preloader').classList.add('hidden')
+  // Display youtube playlist search form
+  document.querySelector('#yt-playlist-search').classList.remove('hidden')
 }
