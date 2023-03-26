@@ -1,7 +1,7 @@
-#yt-playlist-songs {
-  /* max-width: 1000px; */
-  /* margin: 0 auto; */
-}
+/* #yt-playlist-songs {
+  max-width: 1000px; 
+ margin: 0 auto;
+} */
 
 #yt-playlist-songs .row {
   display: grid;
@@ -39,13 +39,3 @@
 .yt-playlist-song--thumbnail img {
   width: 100%;
 }
-/* 
-.yt-playlist-song--status {
-  flex: 1;
-}
-.yt-playlist-song--name {
-  flex: 2;
-}
-.yt-playlist-song--thumbnail {
-  flex: 1;
-} */
