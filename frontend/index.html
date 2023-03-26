@@ -185,7 +185,7 @@
                 type="radio"
                 name="playlist-visibility"
                 id="playlist-visibility--public"
-                value="Public"
+                value="true"
                 required
               />
               <label for="playlist-visibility--public">Public</label>
@@ -194,7 +194,7 @@
                 type="radio"
                 name="playlist-visibility"
                 id="playlist-visibility--private"
-                value="Private"
+                value="false"
                 required
               />
               <label for="playlist-visibility--private">Private</label>
@@ -226,7 +226,8 @@
       Add to Spotify
     </button>
   </body>
-  <script defer src="./scripts/popup.js"></script>
+  <script type="module" defer src="./scripts/spotify-playlist.js"></script>
+  <script type="module" defer src="./scripts/popup.js"></script>
   <script defer type="module" src="./scripts/youtube.js"></script>
   <script defer type="module" src="./scripts/spotify.js"></script>
   <script defer type="module" src="./scripts/script.js"></script>

@@ -21,7 +21,7 @@
   font-family: var(--font-heading);
 }
 
-/* Popup header styles */
+/* Popup header styles[...songURI] */
 #popup-content--header {
   padding: calc(var(--padding) * 2) var(--padding);
   background-color: var(--primary-color);
