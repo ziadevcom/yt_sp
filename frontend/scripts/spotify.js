@@ -5,7 +5,7 @@ const spotifyProfile = document.querySelector('.spotify-profile--content')
 
 // Redirect the user to Spotify login page when clicked on connect to spotify button
 connectSpotify.onclick = () => {
-  const scope = 'playlist-modify-public'
+  const scope = 'playlist-modify-private playlist-modify-public'
   const clientId = 'd4530bfc63064a4493176570357abb89'
   const redirectURI = location.protocol + '//' + location.host + '/'
   location.href = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scope}&redirect_uri=${redirectURI}`
@@ -40,7 +40,6 @@ export async function refreshAccessToken () {
     `${SERVER_URL}spotify/refresh/${refreshToken}`
   )
   const accessTokenObj = await accessTokenJSON.json()
-  console.log(accessTokenObj)
   accessTokenObj.refresh_token = refreshToken
   saveAccessToken(accessTokenObj)
   return accessTokenObj
@@ -70,9 +69,17 @@ export function displaySpotifyUserUI (userInfo) {
 
 // Get user information from spotify api and display user profile in UI
 export async function getSpotifyUserInfo (accessToken) {
-  if (accessToken.error) {
+  if (accessToken?.error) {
     return
   }
+
+  // If user previously fetched then don't make a network request
+  // Instead load from locastorage
+  const userFromLocalStorage = localStorage.getItem('userInfo')
+  if (userFromLocalStorage) {
+    return JSON.parse(userFromLocalStorage)
+  }
+
   // Make request to spotify api to fetch user profile information
   const spotifyProfileJSON = await fetch(`${SPOTIFY_BASE_URL}/me`, {
     headers: {
@@ -80,6 +87,8 @@ export async function getSpotifyUserInfo (accessToken) {
     }
   })
   const spotifyProfileObj = await spotifyProfileJSON.json()
+
+  localStorage.setItem('userInfo', JSON.stringify(spotifyProfileObj))
 
   return spotifyProfileObj
 }
