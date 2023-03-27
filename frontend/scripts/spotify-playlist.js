@@ -3,14 +3,6 @@ import { getSpotifyUserInfo, getLocalAccessToken } from './spotify'
 const closePopup = document.querySelector('#close-popup')
 const addToSpotifyForm = document.querySelector('#add-playlist-spotify')
 
-// User profile information and auth token
-// Used .then method because vite was giving "top level not availble in build target environment"
-let userID = null
-getSpotifyUserInfo().then(userInfo => {
-  userID = userInfo.id
-})
-const { access_token: accessToken } = getLocalAccessToken()
-
 addToSpotifyForm.onsubmit = AddToSpotifyOnSubmit
 
 // Change status of the song when checkbox toggled
@@ -86,6 +78,10 @@ async function AddToSpotifyOnSubmit (event) {
   })
 }
 async function createPlaylistSpotify (playlistInfo) {
+  // User profile information and auth token
+  const { id: userID } = await getSpotifyUserInfo()
+  const { access_token: accessToken } = getLocalAccessToken()
+
   try {
     const playlistJSON = await fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
       method: 'post',
@@ -106,6 +102,9 @@ async function createPlaylistSpotify (playlistInfo) {
 }
 
 async function addSongToPlaylist (playlistID, songURI) {
+  // User profile information and auth token
+  const { access_token: accessToken } = getLocalAccessToken()
+
   try {
     const addedSongJSON = await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, {
       method: 'post',
@@ -126,6 +125,8 @@ async function addSongToPlaylist (playlistID, songURI) {
 }
 
 async function searchTrack (query) {
+  // User profile information and auth token
+  const { access_token: accessToken } = getLocalAccessToken()
   try {
     const songJSON = await fetch(`https://api.spotify.com/v1/search?q=${query}&type=track`, {
       headers: {
