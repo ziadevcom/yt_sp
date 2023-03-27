@@ -1,4 +1,6 @@
 import { getSpotifyUserInfo, getLocalAccessToken } from './spotify'
+import dotsSvg from '../img/dots.svg'
+import checkSvg from '../img/check.svg'
 
 const closePopup = document.querySelector('#close-popup')
 const addToSpotifyForm = document.querySelector('#add-playlist-spotify')
@@ -165,11 +167,11 @@ function changeSongStatusUI (statusDiv, state) {
   }
 
   if (state === 'loading') {
-    loader = '<img src="./img/dots.svg" alt="" class="song-adding-in-process" />'
+    loader = `<img src="${dotsSvg}" alt="" class="song-adding-in-process" />`
   }
 
   if (state === 'finished') {
-    loader = '<img src="./img/check.svg" alt="" class="song-adding-in-process" />'
+    loader = `<img src="${checkSvg}" alt="" class="song-adding-in-process" />`
   }
 
   if (state === 'error') {
