@@ -4,7 +4,11 @@ const closePopup = document.querySelector('#close-popup')
 const addToSpotifyForm = document.querySelector('#add-playlist-spotify')
 
 // User profile information and auth token
-const { id: userID } = await getSpotifyUserInfo()
+// Used .then method because vite was giving "top level not availble in build target environment"
+let userID = null
+getSpotifyUserInfo().then(userInfo => {
+  userID = userInfo.id
+})
 const { access_token: accessToken } = getLocalAccessToken()
 
 addToSpotifyForm.onsubmit = AddToSpotifyOnSubmit
