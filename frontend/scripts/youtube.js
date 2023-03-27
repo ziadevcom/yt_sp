@@ -1,3 +1,5 @@
+import { toggleSong } from './spotify-playlist'
+
 const tryDemoPlaylistButton = document.querySelector('#try-demo')
 const youtubePlaylistForm = document.querySelector('#yt-playlist-search form')
 const playlistURLInput = youtubePlaylistForm.querySelector('input[type="text"]')
@@ -72,19 +74,15 @@ function addSongsUI (songs) {
 }
 
 function createSongElement (songInfo) {
-  const statusImg = '💫'
   const div = document.createElement('div')
-  div.classList = 'yt-playlist-songs--item   row'
+  div.classList = 'yt-playlist-songs--item row'
   const action = `
   <div class="yt-playlist-song--action">
-    <input checked="true" type="checkbox" name="${songInfo.title}" />
+    <input checked="true" class="yt-playlist-songs--checkbox" type="checkbox" name="${songInfo.title}" value="${songInfo.title}"/>
     <label class="visually-hidden" for="${songInfo.title}">Select Song</label>
   </div>`
 
-  const status = `
-  <div class="yt-playlist-song--status">
-    ${statusImg}
-  </div>`
+  const status = '<div class="yt-playlist-song--status">Ready to go</div>'
 
   const title = `
   <div class="yt-playlist-song--song">
@@ -96,7 +94,8 @@ function createSongElement (songInfo) {
   ${title}
   ${status}
   `
-  // console.log(div)
+  // Add toggleSong event listener which changes status of song when toggled
+  div.querySelector('.yt-playlist-songs--checkbox').onchange = toggleSong
   return div
 }
 

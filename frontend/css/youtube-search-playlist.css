@@ -33,6 +33,7 @@ form .form-wrap label {
   padding: 0px;
 }
 
+/* Try demo button above the form */
 #try-demo {
   border-radius: 999px;
   font-size: 14px;
@@ -41,6 +42,19 @@ form .form-wrap label {
   margin-left: 1rem;
 }
 
+/* Style the text that appears when a song is successfully added to the spotify playlist */
+.song-added-in-playlist {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+/* Style loader that appears when song is in progress */
+.song-adding-in-process {
+  max-width: 20px;
+  max-height: 20px;
+}
+
+/* Responsive styles */
 @media screen and (max-width: 500px) {
   #yt-playlist-search input[type="submit"] {
     flex-grow: 1;
