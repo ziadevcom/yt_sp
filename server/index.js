@@ -14,6 +14,21 @@ const redirectURI = process.env.REDIRECT_URI
 
 // Get playlist endpoint
 router.get('/youtube/:id', async (req, res) => {
+  // Fetch playlist name from a different Youtube API endpoint
+  let playlistName = null
+
+  try {
+    const responseJSON = await fetch(`https://youtube.googleapis.com/youtube/v3/playlists?part=snippet&id=${req.params.id}&key=${process.env.API_KEY}`)
+    const response = await responseJSON.json()
+    if (!responseJSON.ok) {
+      throw new Error()
+    }
+    console.log(response)
+    playlistName = response.items[0].snippet.title
+  } catch (error) {
+    res.json({ error: true, message: error.message })
+  }
+
   // Youtube api results max 50 results per api call
   // API is paginated so we get next pageToken if there are more items
   // In the code below, we call the youtube api again and again
@@ -27,14 +42,12 @@ router.get('/youtube/:id', async (req, res) => {
     let response = null; let results = []
     do {
       response = await fetch(
-      `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=999&playlistId=${req.params.id}&key=${process.env.API_KEY}&pageToken=${nextPageToken || ''}`
+      `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${req.params.id}&key=${process.env.API_KEY}&pageToken=${nextPageToken || ''}`
       )
       const data = await response.json()
       totalItems = data.pageInfo.totalResults
       nextPageToken = data.nextPageToken
       results = results.concat(data.items)
-      // console.log(nextPageToken)
-      // console.log(results)
     } while (results.length < totalItems)
 
     // Error handling, in case api error, throw an error
@@ -42,7 +55,6 @@ router.get('/youtube/:id', async (req, res) => {
       console.log(response.error)
       throw new Error('API Failure.')
     }
-
     // Format the response before returning
     const items = results.map((obj) => {
       // Checking if video is private then return null so we can filter and remove these later.
@@ -70,7 +82,7 @@ router.get('/youtube/:id', async (req, res) => {
       })
 
     // Send json response of all videos
-    res.json(items)
+    res.json({ count: items.length, title: playlistName, items })
   } catch (error) {
     console.log(error)
     res.json({ error: true, message: error.message })
@@ -86,7 +98,6 @@ router.get('/spotify/:authorizationCode', async (req, res) => {
     code: authrorizationCode,
     redirect_uri: redirectURI
   })
-  console.log(formBody)
   // Call spotify api to get access token
   // access token is used when calling spotify api on behalf of a user
   try {
