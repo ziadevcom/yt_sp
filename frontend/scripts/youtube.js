@@ -27,10 +27,10 @@ async function getAllSongs (event) {
   const playlistID = getPlaylistID(playlistURL)
 
   // Send API Request to server to fetch all songs from the list
-  const playlistSongs = await fetchSongsFromAPI(serverURL + playlistID)
+  const playlist = await fetchSongsFromAPI(serverURL + playlistID)
 
   // Add songs in the UI
-  addSongsUI(playlistSongs)
+  addSongsUI(playlist.items)
 
   // Enable button again
   getAllSongsButton.removeAttribute('disabled')
@@ -64,13 +64,17 @@ async function fetchSongsFromAPI (playlistID) {
 }
 
 function addSongsUI (songs) {
-  const songsUIWrapper = document.getElementById('yt-playlist-songs')
+  console.log(songs)
+  const songsUIWrapper = document.querySelector('#yt-playlist-songs')
   songsUIWrapper.classList.remove('hidden')
+
+  const songUIWrapperBody = songsUIWrapper.querySelector('#body')
+  songUIWrapperBody.innerHTML = ''
   songs.forEach(songInfo => {
-    songsUIWrapper.appendChild(createSongElement(songInfo))
+    songUIWrapperBody.appendChild(createSongElement(songInfo))
   })
   updateUIElements()
-  songsUIWrapper.scrollIntoView()
+  songUIWrapperBody.scrollIntoView()
 }
 
 function createSongElement (songInfo) {
@@ -109,5 +113,5 @@ function submitDemoForm () {
 
 function updateUIElements () {
   const openPopup = document.querySelector('#open-popup')
-  openPopup.classList.toggle('hidden')
+  openPopup.classList.remove('hidden')
 }
