@@ -1,30 +1,20 @@
-/* #yt-playlist-songs {
-  max-width: 1000px; 
- margin: 0 auto;
-} */
-
 #yt-playlist-songs .row {
   display: grid;
   grid-template-columns: 1fr 4fr 2fr;
   border: var(--border);
   border-bottom-width: 0px;
+  padding: 1rem;
 }
 
-#yt-playlist-songs .row:first-child {
+#yt-playlist-songs #head {
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);
-  padding: 0.5rem 0px;
 }
 
 #yt-playlist-songs .row:last-child {
   border-bottom-width: 2px;
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
-  padding: 0 0 0.5rem 0;
-}
-
-#yt-playlist-songs .row div {
-  padding: 0.75rem;
 }
 
 .yt-playlist-song--action input {
