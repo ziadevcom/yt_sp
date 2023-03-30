@@ -82,7 +82,7 @@ function createSongElement (songInfo) {
   div.classList = 'yt-playlist-songs--item row'
   const action = `
   <div class="yt-playlist-song--action">
-    <input checked="true" class="yt-playlist-songs--checkbox" type="checkbox" name="${songInfo.title}" value="${songInfo.title}"/>
+    <input checked class="yt-playlist-songs--checkbox" type="checkbox" name="${songInfo.title}" value="${songInfo.title}"/>
     <label class="visually-hidden" for="${songInfo.title}">Select Song</label>
   </div>`
 

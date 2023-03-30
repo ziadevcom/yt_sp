@@ -37,48 +37,63 @@ async function AddToSpotifyOnSubmit (event) {
     return
   }
 
+  // Create playlist in spotify account
+  // Notify user & return if failed
   const playlist = await createPlaylistSpotify(formData)
 
   if (playlist?.error) {
     console.log('Could not create playlist.')
+    return
   }
 
-  const allSongsInYoutubePlaylist = [...document.querySelectorAll(".yt-playlist-songs--checkbox[checked='true']")]
+  // Holds all checkboxes inputs
+  const allSongsInYoutubePlaylist = [...document.querySelectorAll('.yt-playlist-songs--checkbox[checked]')]
 
   // Loop over songs & fetch song uris from spotify
-  const songsURIs = []
-  for (const song of allSongsInYoutubePlaylist) {
+  // Return null for songs that are un-checked by the user
+  const songsURIsPromises = allSongsInYoutubePlaylist.map(song => {
+    if (!song.checked) return null
+    // Change status of all songs in UI
     const status = song.parentElement.nextElementSibling.nextElementSibling
-    // Change status current  songs in UI to be loading....
     changeSongStatusUI(status, 'loading')
-
-    let title = song.value
     // Remove gibberish from song title
-    title = title.replace(/[^\w\s]+|(Official|Audio|Video)/gi, '')
-    title = title.replace(/\s+/g, ' ')
+    const songTitle = song.value.replace(/[^\w\s]+|(Official|Audio|Video)/gi, '').replace(/\s+/g, ' ')
+    return searchTrack(songTitle)
+  })
 
-    const songURI = await searchTrack(title)
+  // Use promise all to retrieve the actual song uri's
+  // Previous map just returned the promises, we are listening for resolve now with Promise.all
+  let songsURIs = await Promise.all(songsURIsPromises)
 
-    if (!songURI) {
-      console.log('Could not find the song on spotify.')
-      // Change status of the song that is not available on spotify to be error / failed
-      changeSongStatusUI(status, 'error')
-      continue
-    }
-    songsURIs.push(songURI)
-  }
-
-  // Add found songs in user's playlist
-  const addedSongs = await addSongToPlaylist(playlist.id, songsURIs)
-
-  console.log(addedSongs)
-
-  // Change status of the songs successfully added in the playlist
-  allSongsInYoutubePlaylist.forEach(song => {
-    song = song.parentElement.nextElementSibling.nextElementSibling
+  /*
+  Change status of the songs successfully added in the playlist.
+  Because we returned null for the un-checked songs by user
+  We can check for null and ignore that song & not update it's state in UI
+  */
+  songsURIs.forEach((item, index) => {
+    if (!item) return
+    const song = allSongsInYoutubePlaylist[index].parentElement.nextElementSibling.nextElementSibling
     changeSongStatusUI(song, 'finished')
   })
+
+  /*
+  Remove null items from array before adding to spotify playlist.
+  Remove the items right before adding to spotify because
+  in previous step, we used null items as a reference to which
+  songs to avoid updating their state but we can't pass
+  "null" as uri to spotify api as that will throw errors
+  */
+  songsURIs = songsURIs.filter(song => song !== null)
+
+  // Add songs in user's playlist
+  const addedSongs = await addSongToPlaylist(playlist.id, songsURIs)
+
+  if (addedSongs.error) {
+    console.log('Could not add songs to playlist')
+    console.log(addedSongs)
+  }
 }
+
 async function createPlaylistSpotify (playlistInfo) {
   // User profile information and auth token
   const { id: userID } = await getSpotifyUserInfo()
