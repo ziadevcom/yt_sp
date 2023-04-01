@@ -55,7 +55,7 @@ form .form-wrap label {
 }
 
 /* Responsive styles */
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 800px) {
   #yt-playlist-search input[type="submit"] {
     flex-grow: 1;
   }

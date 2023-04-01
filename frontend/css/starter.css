@@ -56,16 +56,15 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
   font-family: var(--font-text);
-  font-family: 400;
+  font-weight: 400;
   color: var(--text-color);
   background-image: var(--primary-bg);
   padding: 1.25rem;
 }
 
 .container {
-  width: 1300px;
+  width: min(100%, 1300px);
 }
 
 button,
@@ -91,7 +90,7 @@ input[type="submit"]:hover {
 
 @media screen and (max-width: 500px) {
   button {
-    width: 100% !important;
+    width: 100%;
     padding: 0.75rem;
   }
 }
@@ -100,6 +99,12 @@ input[type="submit"]:hover {
   opacity: 0 !important;
   pointer-events: none;
   visibility: hidden;
+  width: 0px !important;
+  height: 0px !important;
+  position: absolute !important;
+  top: 0px;
+  right: 0px;
+  overflow: hidden;
 }
 
 .box {

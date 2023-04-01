@@ -4,7 +4,6 @@
   display: none;
   justify-content: space-between;
   gap: 1.25rem;
-  flex-wrap: wrap;
 }
 
 #spotify-authentication h2,
@@ -36,5 +35,12 @@
 @media screen and (max-width: 900px) {
   #spotify-authentication button {
     --font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #spotify-authentication,
+  #spotify-profile .spotify-profile--content {
+    flex-wrap: wrap;
   }
 }
