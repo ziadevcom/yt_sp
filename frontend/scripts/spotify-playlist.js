@@ -1,6 +1,7 @@
 import { getSpotifyUserInfo, getLocalAccessToken } from './spotify'
 import dotsSvg from '../img/dots.svg'
 import checkSvg from '../img/check.svg'
+import notify from './alerts'
 
 const closePopup = document.querySelector('#close-popup')
 const addToSpotifyForm = document.querySelector('#add-playlist-spotify')
@@ -41,8 +42,8 @@ async function AddToSpotifyOnSubmit (event) {
   // Notify user & return if failed
   const playlist = await createPlaylistSpotify(formData)
 
-  if (playlist?.error) {
-    console.log('Could not create playlist.')
+  if (playlist?.error || playlist instanceof Error) {
+    notify(playlist.message)
     return
   }
 
@@ -83,13 +84,13 @@ async function AddToSpotifyOnSubmit (event) {
   songs to avoid updating their state but we can't pass
   "null" as uri to spotify api as that will throw errors
   */
-  songsURIs = songsURIs.filter(song => song !== null)
+  songsURIs = songsURIs.filter(song => song)
 
   // Add songs in user's playlist
   const addedSongs = await addSongToPlaylist(playlist.id, songsURIs)
 
   if (addedSongs.error) {
-    console.log('Could not add songs to playlist')
+    notify('Could not add songs to playlist')
     console.log(addedSongs)
   }
 }
@@ -115,6 +116,7 @@ async function createPlaylistSpotify (playlistInfo) {
     return playlist
   } catch (error) {
     console.log(error)
+    return error
   }
 }
 
@@ -138,6 +140,7 @@ async function addSongToPlaylist (playlistID, songURI) {
     return addedSong
   } catch (error) {
     console.log(error)
+    return error
   }
 }
 
@@ -165,6 +168,7 @@ async function searchTrack (query) {
     return songsArr[0].uri
   } catch (error) {
     console.log(error)
+    return error
   }
 }
 

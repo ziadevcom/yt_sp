@@ -1,4 +1,5 @@
 import { toggleSong } from './spotify-playlist'
+import notify, { removeAlert } from './alerts'
 
 const tryDemoPlaylistButton = document.querySelector('#try-demo')
 const youtubePlaylistForm = document.querySelector('#yt-playlist-search form')
@@ -10,31 +11,41 @@ tryDemoPlaylistButton.onclick = submitDemoForm
 
 async function getAllSongs (event) {
   event.preventDefault()
+  try {
+    const playlistURL = playlistURLInput.value
+    // Verify if URL is of a valid playlist
+    const serverURL = event.srcElement.action
 
-  // Disable form submit buttons so user can't send consecutive requests before server responded to previous request
-  getAllSongsButton.setAttribute('disabled', true)
-  tryDemoPlaylistButton.setAttribute('disabled', true)
-  const playlistURL = playlistURLInput.value
-  // Verify if URL is of a valid playlist
-  const serverURL = event.srcElement.action
+    if (!isValidPlaylistURL(playlistURL)) {
+      notify('Please provide a valid Youtube playlist\'s URL.')
+      return
+    }
 
-  if (!isValidPlaylistURL(playlistURL)) {
-    console.log('is not a valid url')
-    return
+    // Disable form submit buttons so user can't send consecutive requests before server responded to previous request
+    toggleForm('disable')
+
+    // Slice playlist id from the url
+    const playlistID = getPlaylistID(playlistURL)
+
+    // Send API Request to server to fetch all songs from the list
+    const playlist = await fetchSongsFromAPI(serverURL + playlistID)
+
+    // Error checking
+    if (playlist.error || playlist instanceof Error) {
+      return notify(playlist.message)
+    }
+
+    removeAlert()
+
+    // Add songs in the UI
+    addSongsUI(playlist.items)
+  } catch (error) {
+    console.log(error)
+    notify(error.message)
+  } finally {
+    // Enable form again
+    toggleForm('enable')
   }
-
-  // Slice playlist id from the url
-  const playlistID = getPlaylistID(playlistURL)
-
-  // Send API Request to server to fetch all songs from the list
-  const playlist = await fetchSongsFromAPI(serverURL + playlistID)
-
-  // Add songs in the UI
-  addSongsUI(playlist.items)
-
-  // Enable button again
-  getAllSongsButton.removeAttribute('disabled')
-  tryDemoPlaylistButton.removeAttribute('disabled')
 }
 
 function isValidPlaylistURL (url) {
@@ -53,18 +64,15 @@ async function fetchSongsFromAPI (playlistID) {
   try {
     const playlistResponse = await fetch(playlistID)
     const playlistSongs = await playlistResponse.json()
-    if (playlistSongs.error) {
-      console.log(playlistSongs)
-      throw Error('Something wrong with your playlist id.')
-    }
     return playlistSongs
   } catch (error) {
     console.log(error)
+    return error
   }
 }
 
 function addSongsUI (songs) {
-  console.log(songs)
+  // console.log(songs)
   const songsUIWrapper = document.querySelector('#yt-playlist-songs')
   songsUIWrapper.classList.remove('hidden')
 
@@ -114,4 +122,18 @@ function submitDemoForm () {
 function updateUIElements () {
   const openPopup = document.querySelector('#open-popup')
   openPopup.classList.remove('hidden')
+}
+
+// Toggle form function
+// Disable or enable form submit buttons so user can't send consecutive requests before server has responded to previous request
+function toggleForm (state) {
+  if (state === 'disable') {
+    getAllSongsButton.setAttribute('disabled', true)
+    tryDemoPlaylistButton.setAttribute('disabled', true)
+  } else if (state === 'enable') {
+    getAllSongsButton.removeAttribute('disabled')
+    tryDemoPlaylistButton.removeAttribute('disabled')
+  } else {
+    throw new Error('Please provide one of the valid states. ( enable | disable )')
+  }
 }
