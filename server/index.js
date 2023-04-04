@@ -20,13 +20,17 @@ router.get('/youtube/:id', async (req, res) => {
   try {
     const responseJSON = await fetch(`https://youtube.googleapis.com/youtube/v3/playlists?part=snippet&id=${req.params.id}&key=${process.env.API_KEY}`)
     const response = await responseJSON.json()
-    if (!responseJSON.ok) {
-      throw new Error()
+
+    if (response.items.length === 0) {
+      throw new Error('Could not find playlist. Please check your playlist ID.')
     }
-    console.log(response)
+
     playlistName = response.items[0].snippet.title
   } catch (error) {
-    res.json({ error: true, message: error.message })
+    // Send the response back with return statement in case can't fetch playlist
+    // Return is important here, otherwise, server keeps executing code after res.json
+    // and it crashes
+    return res.json({ error: true, message: error.message })
   }
 
   // Youtube api results max 50 results per api call
