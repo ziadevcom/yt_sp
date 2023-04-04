@@ -137,6 +137,26 @@
           <input type="submit" value="Get All Songs" />
         </form>
       </div>
+      <!-- <div id="alerts" ></div> -->
+      <div class="alert box hidden" role="alert">
+        <p class="alert-text"></p>
+        <button class="close-alert">
+          <svg
+            width="800px"
+            height="800px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16 8L8 16M8.00001 8L16 16"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
       <div id="yt-playlist-songs" class="hidden">
         <div id="head" class="row">
           <div class="yt-playlist-song--status">Select Songs</div>
@@ -227,8 +247,9 @@
       Add to Spotify
     </button>
   </body>
-  <script type="module" defer src="./scripts/spotify-playlist.js"></script>
-  <script type="module" defer src="./scripts/popup.js"></script>
+  <script defer type="module" src="./scripts/alerts.js"></script>
+  <script defer type="module" src="./scripts/spotify-playlist.js"></script>
+  <script defer type="module" src="./scripts/popup.js"></script>
   <script defer type="module" src="./scripts/youtube.js"></script>
   <script defer type="module" src="./scripts/spotify.js"></script>
   <script defer type="module" src="./scripts/script.js"></script>
