@@ -5,6 +5,7 @@ const tryDemoPlaylistButton = document.querySelector('#try-demo')
 const youtubePlaylistForm = document.querySelector('#yt-playlist-search form')
 const playlistURLInput = youtubePlaylistForm.querySelector('input[type="text"]')
 const getAllSongsButton = youtubePlaylistForm.querySelector('input[type="submit"]')
+const playlistInfoUI = document.querySelector('#yt-playlist-info')
 
 youtubePlaylistForm.onsubmit = getAllSongs
 tryDemoPlaylistButton.onclick = submitDemoForm
@@ -39,6 +40,8 @@ async function getAllSongs (event) {
 
     // Add songs in the UI
     addSongsUI(playlist.items)
+    // Display playlist information UI
+    displayPlaylistInfoUI(playlist)
   } catch (error) {
     console.log(error)
     notify(error.message)
@@ -82,7 +85,6 @@ function addSongsUI (songs) {
     songUIWrapperBody.appendChild(createSongElement(songInfo))
   })
   updateUIElements()
-  songUIWrapperBody.scrollIntoView()
 }
 
 function createSongElement (songInfo) {
@@ -122,6 +124,8 @@ function submitDemoForm () {
 function updateUIElements () {
   const openPopup = document.querySelector('#open-popup')
   openPopup.classList.remove('hidden')
+  playlistInfoUI.classList.remove('hidden')
+  playlistInfoUI.scrollIntoView()
 }
 
 // Toggle form function
@@ -136,4 +140,12 @@ function toggleForm (state) {
   } else {
     throw new Error('Please provide one of the valid states. ( enable | disable )')
   }
+}
+
+// Display playlist info in UI
+function displayPlaylistInfoUI (playlistInfo) {
+  const title = playlistInfoUI.querySelector('#playlist-title')
+  const itemsCount = playlistInfoUI.querySelector('#playlist-items-count')
+  title.textContent = playlistInfo.title
+  itemsCount.textContent = playlistInfo.count + ' items'
 }

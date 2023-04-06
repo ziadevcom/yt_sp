@@ -54,6 +54,14 @@ form .form-wrap label {
   max-height: 20px;
 }
 
+/* Playlist information styles */
+#yt-playlist-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  scroll-margin: 4rem;
+}
+
 /* Responsive styles */
 @media screen and (max-width: 800px) {
   #yt-playlist-search input[type="submit"] {
