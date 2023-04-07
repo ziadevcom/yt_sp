@@ -1,3 +1,4 @@
+import angryCat from '../img/angrycat.png'
 const SERVER_URL = import.meta.env.VITE_SERVER_URL
 const SPOTIFY_BASE_URL = 'https://api.spotify.com/v1'
 const connectSpotify = document.getElementById('connectSpotify')
@@ -59,7 +60,7 @@ export function getLocalAccessToken () {
 export function displaySpotifyUserUI (userInfo) {
   // Add user's name and image in the UI
   spotifyProfile.querySelector('h2 span').innerText = userInfo.display_name
-  spotifyProfile.querySelector('img').src = userInfo.images[0].url
+  spotifyProfile.querySelector('img').src = userInfo.images[0]?.url || angryCat
   spotifyProfile.style.display = 'flex'
   // Hide the spotify authentication section
   connectSpotify.parentElement.style.display = 'none'
