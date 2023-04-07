@@ -1,0 +1,17 @@
+#socials {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+#socials svg {
+  --size: clamp(2rem, 2vw, 4rem);
+  width: var(--size);
+  height: var(--size);
+}
+
+#socials svg * {
+  fill: white;
+}

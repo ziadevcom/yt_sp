@@ -70,6 +70,7 @@ form .form-wrap label {
 
   #playlist-id-input {
     --height: 45px;
+    width: 100%;
   }
 
   #yt-playlist-search input[type="submit"] {
