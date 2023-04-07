@@ -4,6 +4,7 @@
   border: var(--border);
   border-bottom-width: 0px;
   padding: 1rem;
+  gap: 1rem;
 }
 
 #yt-playlist-songs #head {
