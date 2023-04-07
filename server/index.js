@@ -40,10 +40,12 @@ router.get('/youtube/:id', async (req, res) => {
   // and stop when number of results is equal to the number of total items
   // in the playlist
 
-  let totalItems; let nextPageToken = ''
+  let totalItems
+  let nextPageToken = ''
 
   try {
-    let response = null; let results = []
+    let response = null
+    let results = []
     do {
       response = await fetch(
       `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${req.params.id}&key=${process.env.API_KEY}&pageToken=${nextPageToken || ''}`
@@ -60,11 +62,10 @@ router.get('/youtube/:id', async (req, res) => {
       throw new Error('API Failure.')
     }
     // Format the response before returning
-    const items = results.map((obj) => {
+    const items = results.map(obj => {
       // Checking if video is private then return null so we can filter and remove these later.
       if (
-        obj.snippet.title === 'Private video' ||
-          obj.snippet.title === 'Deleted video'
+        obj.snippet.title === 'Private video' || obj.snippet.title === 'Deleted video'
       ) {
         return null
       }
@@ -78,12 +79,7 @@ router.get('/youtube/:id', async (req, res) => {
         thumbnail
       }
     })
-      .filter((item) => {
-        if (!item) {
-          return false
-        }
-        return true
-      })
+      .filter(item => item)
 
     // Send json response of all videos
     res.json({ count: items.length, title: playlistName, items })
