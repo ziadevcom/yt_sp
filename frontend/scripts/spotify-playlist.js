@@ -1,6 +1,4 @@
 import { getSpotifyUserInfo, getLocalAccessToken } from './spotify'
-import dotsSvg from '../img/dots.svg'
-import checkSvg from '../img/check.svg'
 import notify from './alerts'
 import updateSummary, { showSummaryUI } from './summary'
 
@@ -185,11 +183,11 @@ function changeSongStatusUI (statusDiv, state) {
   }
 
   if (state === 'loading') {
-    loader = `<img src="${dotsSvg}" alt="" class="song-adding-in-process" />`
+    loader = '<img src="/dots.svg" alt="" class="song-adding-in-process" />'
   }
 
   if (state === 'finished') {
-    loader = `<img src="${checkSvg}" alt="" class="song-adding-in-process" />`
+    loader = '<img src="/check.svg" alt="" class="song-adding-in-process" />'
   }
 
   if (state === 'error') {
