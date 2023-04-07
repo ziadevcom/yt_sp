@@ -137,7 +137,6 @@
           <input type="submit" value="Get All Songs" />
         </form>
       </div>
-      <!-- <div id="alerts" ></div> -->
       <div class="alert box hidden" role="alert">
         <p class="alert-text"></p>
         <button class="close-alert">
@@ -161,6 +160,11 @@
         <h3 id="playlist-title">Playlist Title</h3>
         <p>-</p>
         <p id="playlist-items-count">84 items</p>
+      </div>
+      <div id="summary" class="box hidden">
+        <p id="summary-success__count">Success: <span></span></p>
+        <p>-</p>
+        <p id="summary-failure__count">Failure / Skipped: <span></span></p>
       </div>
       <div id="yt-playlist-songs" class="hidden">
         <div id="head" class="row">
@@ -252,6 +256,7 @@
       Add to Spotify
     </button>
   </body>
+  <script defer type="module" src="./scripts/summary.js"></script>
   <script defer type="module" src="./scripts/alerts.js"></script>
   <script defer type="module" src="./scripts/spotify-playlist.js"></script>
   <script defer type="module" src="./scripts/popup.js"></script>

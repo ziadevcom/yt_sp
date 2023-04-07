@@ -2,6 +2,7 @@ import { getSpotifyUserInfo, getLocalAccessToken } from './spotify'
 import dotsSvg from '../img/dots.svg'
 import checkSvg from '../img/check.svg'
 import notify from './alerts'
+import updateSummary, { showSummaryUI } from './summary'
 
 const closePopup = document.querySelector('#close-popup')
 const addToSpotifyForm = document.querySelector('#add-playlist-spotify')
@@ -64,7 +65,20 @@ async function AddToSpotifyOnSubmit (event) {
 
   // Use promise all to retrieve the actual song uri's
   // Previous map just returned the promises, we are listening for resolve now with Promise.all
-  let songsURIs = await Promise.all(songsURIsPromises)
+  const songsURIs = await Promise.all(songsURIsPromises)
+
+  /*
+  Remove null items from array before adding to spotify playlist.
+  Remove the items right before adding to spotify because
+  in previous step, we used null items as a reference to which songs to avoid updating their state but we can't pass "null" as uri to spotify api as that will throw errors
+  */
+  // Add songs in user's playlist
+  const addedSongs = await addSongToPlaylist(playlist.id, songsURIs.filter(song => song))
+
+  if (addedSongs.error) {
+    notify('Could not add songs to playlist')
+    console.log(addedSongs)
+  }
 
   /*
   Change status of the songs successfully added in the playlist.
@@ -77,22 +91,7 @@ async function AddToSpotifyOnSubmit (event) {
     changeSongStatusUI(song, 'finished')
   })
 
-  /*
-  Remove null items from array before adding to spotify playlist.
-  Remove the items right before adding to spotify because
-  in previous step, we used null items as a reference to which
-  songs to avoid updating their state but we can't pass
-  "null" as uri to spotify api as that will throw errors
-  */
-  songsURIs = songsURIs.filter(song => song)
-
-  // Add songs in user's playlist
-  const addedSongs = await addSongToPlaylist(playlist.id, songsURIs)
-
-  if (addedSongs.error) {
-    notify('Could not add songs to playlist')
-    console.log(addedSongs)
-  }
+  displayResults(songsURIs, allSongsInYoutubePlaylist)
 }
 
 async function createPlaylistSpotify (playlistInfo) {
@@ -178,7 +177,7 @@ function changeSongStatusUI (statusDiv, state) {
   let loader = null
 
   if (state === 'excluded') {
-    loader = '<p>🟡 Not Selected</p>'
+    loader = '<p>Not Selected</p>'
   }
 
   if (state === 'idle') {
@@ -200,4 +199,19 @@ function changeSongStatusUI (statusDiv, state) {
   }
 
   statusDiv.innerHTML = loader
+}
+
+function displayResults (songsURIs, allSongsInYoutubePlaylist) {
+  const success = []
+  const failures = []
+  songsURIs.forEach((song, index) => {
+    if (!song) {
+      failures.push(allSongsInYoutubePlaylist[index])
+      return
+    }
+    success.push(allSongsInYoutubePlaylist[index])
+  })
+
+  updateSummary(success, failures)
+  showSummaryUI()
 }

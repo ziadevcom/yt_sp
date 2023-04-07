@@ -1,5 +1,6 @@
 import { toggleSong } from './spotify-playlist'
 import notify, { removeAlert } from './alerts'
+import { removeSummaryUI } from './summary'
 
 const tryDemoPlaylistButton = document.querySelector('#try-demo')
 const youtubePlaylistForm = document.querySelector('#yt-playlist-search form')
@@ -37,6 +38,7 @@ async function getAllSongs (event) {
     }
 
     removeAlert()
+    removeSummaryUI()
 
     // Add songs in the UI
     addSongsUI(playlist.items)

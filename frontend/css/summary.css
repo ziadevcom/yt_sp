@@ -1,0 +1,12 @@
+#summary {
+  display: flex;
+  gap: 1rem;
+}
+
+#summary-success__count {
+  color: greenyellow;
+}
+
+#summary-failure__count {
+  color: var(--secondary-color);
+}
