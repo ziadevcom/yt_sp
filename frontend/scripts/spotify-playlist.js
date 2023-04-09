@@ -57,7 +57,7 @@ async function AddToSpotifyOnSubmit (event) {
     const status = song.parentElement.nextElementSibling.nextElementSibling
     changeSongStatusUI(status, 'loading')
     // Remove gibberish from song title
-    const songTitle = song.value.replace(/[^\w\s]+|(Official|Audio|Video)/gi, '').replace(/\s+/g, ' ')
+    const songTitle = song.value.replace(/(Official|Audio|Video|Lyrics)/gi, '').replace(/\s+/g, ' ')
     return searchTrack(songTitle)
   })
 
@@ -142,10 +142,13 @@ async function addSongToPlaylist (playlistID, songURI) {
 }
 
 async function searchTrack (query) {
+  // Return null if falsy query value
+  if (!query) return null
+
   // User profile information and auth token
   const { access_token: accessToken } = getLocalAccessToken()
   try {
-    const songJSON = await fetch(`https://api.spotify.com/v1/search?q=${query}&type=track`, {
+    const songJSON = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`
@@ -153,7 +156,6 @@ async function searchTrack (query) {
     })
 
     const song = await songJSON.json()
-
     const songsArr = song.tracks.items
 
     // If did not find a track on spoitfy return null
