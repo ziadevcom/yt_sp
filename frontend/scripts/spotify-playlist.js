@@ -51,31 +51,65 @@ async function AddToSpotifyOnSubmit (event) {
 
   // Loop over songs & fetch song uris from spotify
   // Return null for songs that are un-checked by the user
-  const songsURIsPromises = allSongsInYoutubePlaylist.map(song => {
-    if (!song.checked) return null
-    // Change status of all songs in UI
-    const status = song.parentElement.nextElementSibling.nextElementSibling
-    changeSongStatusUI(status, 'loading')
-    // Remove gibberish from song title
-    const songTitle = song.value.replace(/(Official|Audio|Video|Lyrics)/gi, '').replace(/\s+/g, ' ')
-    return searchTrack(songTitle)
-  })
+  // const songsURIsPromises = allSongsInYoutubePlaylist.map(song => {
+  //   if (!song.checked) return null
+  //   // Change status of all songs in UI
+  //   const status = song.parentElement.nextElementSibling.nextElementSibling
+  //   changeSongStatusUI(status, 'loading')
+  //   // Remove gibberish from song title
+  //   const songTitle = song.value.replace(/(Official|Audio|Video|Lyrics)/gi, '').replace(/\s+/g, ' ')
+  //   return searchTrack(songTitle)
+  // })
 
   // Use promise all to retrieve the actual song uri's
   // Previous map just returned the promises, we are listening for resolve now with Promise.all
-  const songsURIs = await Promise.all(songsURIsPromises)
+  // const songsURIs = await Promise.all(songsURIsPromises)
 
+  // Search for songs in batches
+  const songsURIs = []
+  const batchSize = 25
+  for (let i = 0; i < allSongsInYoutubePlaylist.length; i += batchSize) {
+    // Take a batch slice of songs
+    const batch = allSongsInYoutubePlaylist.slice(i, i + batchSize)
+
+    // Map batch to promises (skip unchecked)
+    const batchPromises = batch.map(song => {
+      if (!song.checked) return Promise.resolve(null)
+
+      const status = song.parentElement.nextElementSibling.nextElementSibling
+      changeSongStatusUI(status, 'loading')
+      const songTitle = song.value.replace(/(Official|Audio|Video|Lyrics)/gi, '').replace(/\s+/g, ' ')
+
+      return searchTrack(songTitle)
+    })
+
+    // Wait for all promises in this batch to finish
+    const batchResults = await Promise.all(batchPromises)
+
+    songsURIs.push(...batchResults)
+
+    if (i + batchSize < allSongsInYoutubePlaylist.length) {
+      await delay(3000)
+    }
+  }
+
+  console.log(songsURIs)
   /*
   Remove null items from array before adding to spotify playlist.
   Remove the items right before adding to spotify because
   in previous step, we used null items as a reference to which songs to avoid updating their state but we can't pass "null" as uri to spotify api as that will throw errors
   */
   // Add songs in user's playlist
-  const addedSongs = await addSongToPlaylist(playlist.id, songsURIs.filter(song => song))
+  // const addedSongs = await addSongToPlaylist(playlist.id, songsURIs.filter(song => song))
 
-  if (addedSongs.error) {
-    notify('Could not add songs to playlist')
-    console.log(addedSongs)
+  const songsURIsTemp = songsURIs.filter(song => song)
+
+  for (let i = 0; i < songsURIs.length; i += 100) {
+    const addedSongs = await addSongToPlaylist(playlist.id, songsURIsTemp.slice(i, i + 100))
+    if (addedSongs.error) {
+      notify(`Could not add songs to playlist. Total songs added: ${i}`)
+      console.log(addedSongs)
+    }
   }
 
   /*
@@ -214,4 +248,8 @@ function displayResults (songsURIs, allSongsInYoutubePlaylist) {
 
   updateSummary(success, failures)
   showSummaryUI()
+}
+
+function delay (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
